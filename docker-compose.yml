@@ -1,0 +1,23 @@
+mysql:
+  image: mysql:5.6
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
+  environment:
+    MYSQL_ROOT_PASSWORD: 1234
+    MYSQL_DATABASE: test
+    MYSQL_USER: myuser
+    MYSQL_PASSWORD: mypass
+  ports:
+    - "3306:3306"
+api:
+  image: singram/singram-springboot-test
+  ports:
+    - "8080:8080"
+  environment:
+    SPRING_PROFILES_ACTIVE: dev
+  links:
+    - mysql
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/timezone:/etc/timezone:ro
