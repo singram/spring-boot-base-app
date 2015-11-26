@@ -17,7 +17,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'docker'
 
 jar {
-    baseName = 'singram-springboot-test'
+    baseName = 'singram-spring-base-app'
     version =  '0.1.0'
 }
 
