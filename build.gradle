@@ -32,6 +32,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile('org.springframework.data:spring-data-rest-webmvc:2.4.1.RELEASE')
     compile("org.springframework.boot:spring-boot-starter-remote-shell")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.flywaydb:flyway-core:3.1")
