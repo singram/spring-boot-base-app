@@ -10,6 +10,8 @@ buildscript {
 }
 
 plugins {
+    id "java"
+    id "com.github.samueltbrown.cucumber" version "0.9"
     id "org.flywaydb.flyway" version "3.2"
 }
 
@@ -40,11 +42,13 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+build.dependsOn cucumber
+
 dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-data-rest")
-    compile 'org.springframework.data:spring-data-rest-hal-browser'
+    compile('org.springframework.data:spring-data-rest-hal-browser')
     compile('org.springframework.data:spring-data-rest-webmvc:2.4.1.RELEASE')
     compile("org.springframework.boot:spring-boot-starter-remote-shell")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -55,8 +59,11 @@ dependencies {
 
     runtime("mysql:mysql-connector-java:5.1.6")
 
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("junit:junit")
+    testCompile ("org.springframework.boot:spring-boot-starter-test",
+                 "junit:junit",
+                 "info.cukes:cucumber-java:1.2.4",
+                 "info.cukes:cucumber-junit:1.2.4",
+                 "info.cukes:cucumber-spring:1.2.4")
 }
 
 task wrapper(type: Wrapper) {
