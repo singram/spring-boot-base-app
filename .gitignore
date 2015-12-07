@@ -14,6 +14,7 @@ build/
 .project
 .settings/
 .classpath
+.springBeans
 
 # Gradle install file
 .gradle/
