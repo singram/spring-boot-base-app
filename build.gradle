@@ -42,7 +42,7 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-build.dependsOn cucumber
+//build.dependsOn cucumber
 
 dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
@@ -61,9 +61,12 @@ dependencies {
 
     testCompile ("org.springframework.boot:spring-boot-starter-test",
                  "junit:junit",
+                 "info.cukes:cucumber-jvm:1.2.4",
+                 "info.cukes:cucumber-core:1.2.4",
                  "info.cukes:cucumber-java:1.2.4",
                  "info.cukes:cucumber-junit:1.2.4",
                  "info.cukes:cucumber-spring:1.2.4")
+  //  cucumberCompile 'info.cukes:cucumber-java:1.2.2'
 }
 
 task wrapper(type: Wrapper) {
