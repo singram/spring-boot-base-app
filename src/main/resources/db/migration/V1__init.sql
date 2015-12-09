@@ -4,4 +4,3 @@ CREATE TABLE IF NOT EXISTS person (
 	last_name  varchar(60) not null
 );
 
-insert into person (first_name, last_name) values ('Stuart', 'Ingram');

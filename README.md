@@ -11,6 +11,17 @@ http://docs.spring.io/spring/docs/current/spring-framework-reference/html/valida
 http://stackoverflow.com/questions/24318405/spring-data-rest-validator
 http://www.bernhardwenzel.com/blog/2014/10/10/spring-boot-rest-knockout-bookmarks#the-domain-model
 
+## Testing
+http://www.jayway.com/2013/12/10/json-schema-validation-with-rest-assured/
+http://www.jayway.com/2014/01/14/unit-testing-spring-mvc-controllers-with-rest-assured/
+https://github.com/flyway/flyway-test-extensions/wiki/Usage-flyway-spring-test
+https://github.com/Hippoom/spring-test-dbunit-template
+
+http://g00glen00b.be/spring-boot-rest-assured/
+http://www.javabeat.net/spring-boot-testing/
+http://blog.czeczotka.com/2015/01/20/spring-mvc-integration-test-with-rest-assured-and-mockmvc/
+http://www.joecolantonio.com/2014/02/26/rest-testing-with-java-part-two-getting-started-with-rest-assured/
+
 ## Access notes
 alps+json
 hal+json
