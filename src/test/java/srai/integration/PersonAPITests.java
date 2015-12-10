@@ -1,6 +1,6 @@
 package srai.integration;
 
-import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.when;
+import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.flywaydb.test.annotation.FlywayTest;
@@ -27,7 +27,7 @@ import srai.Application;
 	FlywayTestExecutionListener.class })
 @IntegrationTest
 @WebAppConfiguration
-public class ThoughtAPITests {
+public class PersonAPITests {
 
 	@Autowired
 	private WebApplicationContext context;
@@ -39,11 +39,26 @@ public class ThoughtAPITests {
 
 	@Test
 	@FlywayTest(locationsForMigrate = {"db/data"})
-	public void createsDataSource() {
+	public void readPersonRecord() {
+		given().
 		when().
-		get("/people/1").
+		get("/people/{person_id}", 1).
 		then().
 		statusCode(200).
 		body("firstName", equalTo("Stuart"));
 	}
+
+	//	@Test
+	//	@FlywayTest(locationsForMigrate = {"db/data"})
+	//	public void createPersonRecord() {
+	//		ValidatableMockMvcResponse response = given().
+	//				body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }").
+	//				when().
+	//				post("/people").
+	//				then().
+	//				statusCode(201).
+	//				body(equalTo("a string"));
+	//
+	//
+	//	}
 }

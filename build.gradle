@@ -1,4 +1,8 @@
 buildscript {
+    ext {
+        jdkVersion = 1.8
+    }
+    
     repositories {
         mavenCentral()
     }
@@ -37,13 +41,13 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = jdkVersion
+targetCompatibility = jdkVersion
 
 dependencies {
     compile("org.flywaydb:flyway-core:3.1")
-    compile("com.jayway.restassured:json-path:2.4.1")
-    compile("com.jayway.restassured:xml-path:2.4.1")
+    compile("com.jayway.restassured:json-path:2.7.0")
+    compile("com.jayway.restassured:xml-path:2.7.0")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.data:spring-data-rest-hal-browser")
     compile('org.springframework.data:spring-data-rest-webmvc:2.4.1.RELEASE')
@@ -59,8 +63,8 @@ dependencies {
         exclude group: 'org.slf4j' //introducing multiple slf4j impl
     }
     testCompile("org.springframework.boot:spring-boot-starter-test",
-                "com.jayway.restassured:rest-assured:2.4.1",
-                'com.jayway.restassured:spring-mock-mvc:2.4.1',
+                "com.jayway.restassured:rest-assured:2.7.0",
+                'com.jayway.restassured:spring-mock-mvc:2.7.0',
                 "junit:junit")
 }
 

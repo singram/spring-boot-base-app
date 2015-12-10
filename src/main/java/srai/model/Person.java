@@ -5,13 +5,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Person {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private Long id;
 	private String firstName;
 	private String lastName;
@@ -47,5 +48,13 @@ public class Person {
 
 	public void setThoughts(List<Thought> thoughts) {
 		this.thoughts = thoughts;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
