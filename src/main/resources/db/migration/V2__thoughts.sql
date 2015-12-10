@@ -5,4 +5,3 @@ CREATE TABLE IF NOT EXISTS thoughts (
 	creation_date DATE
 );
 
-INSERT INTO thoughts (id, person_id, data, creation_date) VALUES (1, 1, "Oh my lord it's alive", CURDATE());
