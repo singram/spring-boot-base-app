@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
+import com.jayway.restassured.module.mockmvc.response.ValidatableMockMvcResponse;
 
 import srai.Application;
 
@@ -27,6 +28,7 @@ import srai.Application;
 	FlywayTestExecutionListener.class })
 @IntegrationTest
 @WebAppConfiguration
+@FlywayTest(locationsForMigrate = {"db/data"})
 public class PersonAPITests {
 
 	@Autowired
@@ -38,8 +40,7 @@ public class PersonAPITests {
 	}
 
 	@Test
-	@FlywayTest(locationsForMigrate = {"db/data"})
-	public void readPersonRecord() {
+	public void readPersonRecordFixture() {
 		given().
 		when().
 		get("/people/{person_id}", 1).
@@ -48,17 +49,33 @@ public class PersonAPITests {
 		body("firstName", equalTo("Stuart"));
 	}
 
-	//	@Test
-	//	@FlywayTest(locationsForMigrate = {"db/data"})
-	//	public void createPersonRecord() {
-	//		ValidatableMockMvcResponse response = given().
-	//				body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }").
-	//				when().
-	//				post("/people").
-	//				then().
-	//				statusCode(201).
-	//				body(equalTo("a string"));
-	//
-	//
-	//	}
+	@Test
+	public void createPersonRecord() {
+		//MockMvcResponse response =
+		String personId =
+				given().
+				contentType("application/json").
+				body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }").
+				when().
+				post("/people").
+				then().
+				statusCode(201).
+				extract().
+				path("id");
+		//				response();
+		//		String r = response.prettyPrint();
+		//		String b = response.body().asString();
+		//		String personId = response.path("id");
+		givenExistingPerson(personId).
+		and().
+		body("firstName", equalTo("Stuart"));
+	}
+
+	private ValidatableMockMvcResponse givenExistingPerson(String person_id) {
+		return given().
+				when().
+				get("/people/{person_id}", 1).
+				then().
+				statusCode(200);
+	}
 }
