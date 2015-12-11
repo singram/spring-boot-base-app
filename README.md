@@ -1,10 +1,52 @@
 # spring-boot-base-app
 Basic spring boot application with standard libraries for experimentation
 
+## Getting started
+
+Pre-requisites
+- Java 1.8
+- Docker
+- Docker-compose
+
+### Installation (debian base)
+
+#### Install Docker
+
+    apt-get install apparmor lxc cgroup-lite
+    wget -qO- https://get.docker.com/ | sh
+    sudo usermod -aG docker YourUserNameHere
+    sudo service docker restart
+
+#### Install Docker-compose  (1.4+)
+
+*MAKE SURE YOU HAVE AN UP TO DATE VERSION OF DOCKER COMPOSE*
+
+To check the version:
+ 
+    docker-compose --version
+
+To install the 1.4.2:
+
+    sudo su
+    curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+    exit
+
+## To run
+
+    docker-compose up
+  
+## To run docker mysql while running app locally
+
+    docker-compose up mysql
+    ./gradlew bootRun
+
+
 ## Eclipse notes
 Necessary changes to exclude code from the automatic formatter can be found here
 Note. Eclipse formatting in Mars appears to be broken (http://stackoverflow.com/questions/31048040/how-to-force-the-eclipse-mars-4-5-formatter-not-to-join-already-wrapped-lines)
- http://www.eclipseonetips.com/2013/10/15/disable-eclipse-formatting-for-certain-sections-of-code-only/
+
+http://www.eclipseonetips.com/2013/10/15/disable-eclipse-formatting-for-certain-sections-of-code-only/
 
 ## Refs
 ### spring-data-rest
