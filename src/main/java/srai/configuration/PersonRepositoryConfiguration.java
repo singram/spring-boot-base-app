@@ -18,6 +18,7 @@ public class PersonRepositoryConfiguration extends RepositoryRestConfigurerAdapt
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
 		config.exposeIdsFor(Person.class);
+		config.setReturnBodyOnCreate(true);
 	}
 
 	@Override
