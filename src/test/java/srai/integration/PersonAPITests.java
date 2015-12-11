@@ -76,7 +76,7 @@ public class PersonAPITests {
 		when().
 		post("/people").
 		then().
-		//		contentType(ContentType.JSON).
+		contentType(ContentType.JSON).
 		statusCode(HttpServletResponse.SC_CREATED);
 		//				extract().
 		//				path("id");
