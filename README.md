@@ -69,6 +69,9 @@ http://www.javabeat.net/spring-boot-testing/
 http://blog.czeczotka.com/2015/01/20/spring-mvc-integration-test-with-rest-assured-and-mockmvc/
 http://www.joecolantonio.com/2014/02/26/rest-testing-with-java-part-two-getting-started-with-rest-assured/
 
+## Logging
+https://mdeinum.wordpress.com/2015/07/01/spring-framework-hidden-gems/
+
 ## Access notes
 alps+json
 hal+json
@@ -93,7 +96,6 @@ Bill Koch (https://github.com/billkoch)
 - Expanded manifest/info
 - Profiles
 - Logging
-- Statsd compatibility
-- Actuator
+- Statsd compatibility (fix api logging and add system level logging per host)
 - Multi db support
 - Redis caching
