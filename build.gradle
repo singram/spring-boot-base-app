@@ -58,6 +58,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 
     runtime("mysql:mysql-connector-java:5.1.6")
+    compile("com.timgroup:java-statsd-client")
 
     testCompile('org.flywaydb.flyway-test-extensions:flyway-spring-test:3.2.1') {
         exclude group: 'org.slf4j' //introducing multiple slf4j impl
