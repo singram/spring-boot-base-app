@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "endpoints.git.enabled",
+  "type": "java.lang.String",
+  "description": "Set to true/false to expose the git information endpoint"
+}]}
