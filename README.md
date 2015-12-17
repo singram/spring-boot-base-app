@@ -72,6 +72,9 @@ http://www.joecolantonio.com/2014/02/26/rest-testing-with-java-part-two-getting-
 ## Logging
 https://mdeinum.wordpress.com/2015/07/01/spring-framework-hidden-gems/
 
+## Git
+http://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-returning-git-commit-information-as-json/
+
 ## Access notes
 alps+json
 hal+json
