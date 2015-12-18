@@ -48,6 +48,19 @@ Note. Eclipse formatting in Mars appears to be broken (http://stackoverflow.com/
 
 http://www.eclipseonetips.com/2013/10/15/disable-eclipse-formatting-for-certain-sections-of-code-only/
 
+## Features
+
+Includes the following
+- Spring Actuator (\actuator content)
+  - Populated \info endpoint
+  - Custom \git endpoint (enabled by default)
+- Docker support with docker-compose
+- Flyway migrations
+- Full HAL & APLS REST API
+  - Validation example
+  - Lifecycle hook example
+- Integration testing via RestAssured
+
 ## Refs
 ### spring-data-rest
 http://docs.spring.io/spring-data/rest/docs/current/reference/html/
@@ -74,6 +87,7 @@ https://mdeinum.wordpress.com/2015/07/01/spring-framework-hidden-gems/
 
 ## Git
 http://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-returning-git-commit-information-as-json/
+https://github.com/n0mer/gradle-git-properties/
 
 ## Access notes
 alps+json
@@ -96,7 +110,6 @@ Bill Koch (https://github.com/billkoch)
 
 - Auto reload
 - Lombock
-- Expanded manifest/info
 - Profiles
 - Logging
 - Statsd compatibility (fix api logging and add system level logging per host)
