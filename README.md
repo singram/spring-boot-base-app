@@ -32,21 +32,21 @@ To install the 1.4.2:
     chmod +x /usr/local/bin/docker-compose
     exit
 
-## To run
-
-    docker-compose up
-  
-## To run docker mysql while running app locally
-
-    docker-compose up mysql
-    ./gradlew bootRun
-
-
-## Eclipse notes
+#### Eclipse notes
 Necessary changes to exclude code from the automatic formatter can be found here
 Note. Eclipse formatting in Mars appears to be broken (http://stackoverflow.com/questions/31048040/how-to-force-the-eclipse-mars-4-5-formatter-not-to-join-already-wrapped-lines)
 
 http://www.eclipseonetips.com/2013/10/15/disable-eclipse-formatting-for-certain-sections-of-code-only/
+
+
+## To run
+
+    docker-compose up
+  
+### To run docker mysql while running app locally
+
+    docker-compose up mysql
+    ./gradlew bootRun
 
 ## Features
 
