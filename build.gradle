@@ -29,6 +29,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'docker'
 apply plugin: 'org.flywaydb.flyway'
+apply from:   "$rootDir/code-quality.gradle"
 
 repositories {
     mavenCentral()
@@ -75,9 +76,8 @@ test {
 //  }
 }
 
-
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.7'
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

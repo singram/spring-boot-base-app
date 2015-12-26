@@ -7,27 +7,29 @@ import org.springframework.validation.Validator;
 
 import srai.model.Person;
 
+/** Validated for Person model. */
 @Component
 public class PersonValidator implements Validator {
 
-	/**
-	 * This Validator validates *just* Person instances
-	 */
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return Person.class.equals(clazz);
-	}
+  /**
+   * This Validator validates *just* Person instances.
+   */
+  @Override
+  public boolean supports(final Class<?> clazz) {
+    return Person.class.equals(clazz);
+  }
 
-	@Override
-	public void validate(Object obj, Errors e) {
-		ValidationUtils.rejectIfEmpty(e, "firstName", "firstName.empty");
-		ValidationUtils.rejectIfEmpty(e, "lastName", "lastName.empty");
-		/*		Person p = (Person) obj;
-		if (p.getAge() < 0) {
-			e.rejectValue("age", "negativevalue");
-		} else if (p.getAge() > 110) {
-			e.rejectValue("age", "too.darn.old");
-		}
-		 */
-	}
+  /** Validation of person model. */
+  @Override
+  public void validate(final Object obj, final Errors errors) {
+    ValidationUtils.rejectIfEmpty(errors, "firstName", "firstName.empty");
+    ValidationUtils.rejectIfEmpty(errors, "lastName", "lastName.empty");
+    /* Person p = (Person) obj;
+       if (p.getAge() < 0) {
+          e.rejectValue("age", "negativevalue");
+       } else if (p.getAge() > 110) {
+          e.rejectValue("age", "too.darn.old");
+       }
+     */
+  }
 }

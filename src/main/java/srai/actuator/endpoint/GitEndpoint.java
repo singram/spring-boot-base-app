@@ -7,35 +7,29 @@ import org.springframework.stereotype.Component;
 
 import srai.actuator.properties.GitProperties;
 
+/** Simple actuator extension to expose git properties. */
 @Component
-//public class gitEndpoint implements Endpoint<List<String>> {
 @ConfigurationProperties(prefix = "endpoints.git", ignoreUnknownFields = false)
 public class GitEndpoint extends AbstractEndpoint<GitProperties> {
 
-	@Autowired
-	private GitProperties gitProperties;
+  /** Git properties source. */
+  @Autowired
+  private transient GitProperties gitProperties;
 
-	public GitEndpoint() {
-		super("git");
-	}
+  /** Constructor. */
+  public GitEndpoint() {
+    super("git");
+  }
 
-	@Override
-	public String getId() {
-		return "git";
-	}
+  /** Endpoint identifier. */
+  @Override
+  public String getId() {
+    return "git";
+  }
 
-	//	@Override
-	//	public boolean isEnabled() {
-	//		return true;
-	//	}
-	//
-	//	@Override
-	//	public boolean isSensitive() {
-	//		return true;
-	//	}
-
-	@Override
-	public GitProperties invoke() {
-		return gitProperties;
-	}
+  /** Endpoint payload when invoked through actuator framework. */
+  @Override
+  public GitProperties invoke() {
+    return gitProperties;
+  }
 }

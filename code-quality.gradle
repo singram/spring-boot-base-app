@@ -1,0 +1,102 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
+
+task checksCopyIndexHtml << {
+    copy {
+        from file("${project.rootDir}/config/index.html")
+        into file("${project.buildDir}/reports")
+    }
+}
+check.finalizedBy checksCopyIndexHtml
+
+checkstyle {
+       configFile = file("${project.rootDir}/config/checkstyle/google_checks-6.13.xml")
+       toolVersion = "6.14.1"
+       ignoreFailures = true 
+}
+
+task checkstyleMainHtml << {
+    ant.xslt(in: checkstyleMain.reports.xml.destination,
+             style: file("${project.rootDir}/config/checkstyle/checkstyle-noframes-sorted.xsl"),
+             out: new File(checkstyleMain.reports.xml.destination.parent, 'main.html'))
+}
+checkstyleMain.finalizedBy checkstyleMainHtml
+
+
+task checkstyleTestHtml << {
+    ant.xslt(in: checkstyleTest.reports.xml.destination,
+             style: file("${project.rootDir}/config/checkstyle/checkstyle-noframes-sorted.xsl"),
+             out: new File(checkstyleTest.reports.xml.destination.parent, 'test.html'))
+}
+checkstyleTest.finalizedBy checkstyleTestHtml
+
+pmd {
+  toolVersion = "5.4.1"
+  ignoreFailures = false
+  ruleSetFiles = files("${project.rootDir}/config/pmd/java-rulesets.xml")
+}
+
+tasks.withType(Pmd) {
+   reports {
+      xml.enabled = true
+      html.enabled = false
+} }
+
+task pmdMainHtml << {
+    ant.xslt(in: pmdMain.reports.xml.destination,
+             style: file("${project.rootDir}/config/pmd/pmd-nicerhtml.xsl"),
+             out: new File(pmdMain.reports.xml.destination.parent, 'main.html'))
+}
+pmdMain.finalizedBy pmdMainHtml
+
+task pmdTestHtml << {
+    ant.xslt(in: pmdTest.reports.xml.destination,
+             style: file("${project.rootDir}/config/pmd/pmd-nicerhtml.xsl"),
+             out: new File(pmdTest.reports.xml.destination.parent, 'test.html'))
+}
+pmdTest.finalizedBy pmdTestHtml
+
+
+findbugs {
+   toolVersion = '3.0.1'
+   ignoreFailures = false 
+   effort = 'max'
+   excludeFilter = file("$projectDir/config/findbugs/excludeFilter.xml")
+}
+
+tasks.withType(FindBugs) {
+   reports {
+      xml.enabled = false
+      html.enabled = true
+} }
+
+jacoco {
+    toolVersion = "0.7.5.201505241946"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html{
+            enabled true
+            destination "${buildDir}/reports/jacoco"
+        }
+    }
+}
+
+tasks.build.dependsOn(jacocoTestReport, javadoc)
+
+task reports(dependsOn: [ 'check', 'test', 'javadoc', 'jacocoTestReport'] ) << {
+    println "Reports generated."
+}
+

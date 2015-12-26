@@ -9,17 +9,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import srai.model.repository.PersonRepository;
 
+/** Simple controller to illustrate templates. */
 @Controller
 public class GreetingController {
 
-	@Autowired
-	private PersonRepository repository;
+  /** Person repository. */
+  @Autowired
+  private transient PersonRepository repository;
 
-	@RequestMapping(value = "/greeting", method = RequestMethod.GET)
-	public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
-		this.repository.findAll();
-		model.addAttribute("name", name);
-		return "greeting";
-	}
+  /**
+   * Simple greeting API.
+   * @return reference to greetings template
+   */
+  @RequestMapping(value = "/greeting", method = RequestMethod.GET)
+  public String greeting(
+      @RequestParam(value = "name", required = false, defaultValue = "World") final String name,
+      final Model model) {
+    this.repository.findAll();
+    model.addAttribute("name", name);
+    return "greeting";
+  }
 
 }

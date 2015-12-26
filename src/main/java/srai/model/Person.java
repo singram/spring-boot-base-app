@@ -7,44 +7,56 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/** Person data model. */
 @Entity
-@Table(name="people")
+@Table(name = "people")
 public class Person extends CommonBaseModel {
 
-	private String firstName;
-	private String lastName;
+  /** First name. */
+  private String firstName;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-	private List<Thought> thoughts;
+  /** Last name. */
+  private String lastName;
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+  /** Thoughts a person has. */
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+  private List<Thought> thoughts;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+  /** First name getter. */
+  public String getFirstName() {
+    return this.firstName;
+  }
 
-	public String getLastName() {
-		return this.lastName;
-	}
+  /** First name setter. */
+  public void setFirstName(final String firstName) {
+    this.firstName = firstName;
+  }
 
-	public void setLastName(String lastname) {
-		this.lastName = lastname;
-	}
+  /** Last name getter. */
+  public String getLastName() {
+    return this.lastName;
+  }
 
-	@Override
-	public String toString() {
-		return "Person [firstName=" + this.firstName + ", lastName=" + this.lastName
-				+ "]";
-	}
+  /** Last name setter. */
+  public void setLastName(final String lastname) {
+    this.lastName = lastname;
+  }
 
-	public List<Thought> getThoughts() {
-		return thoughts;
-	}
+  /** String representation. */
+  @Override
+  public String toString() {
+    return "Person [firstName=" + this.firstName + ", lastName=" + this.lastName
+        + "]";
+  }
 
-	public void setThoughts(List<Thought> thoughts) {
-		this.thoughts = thoughts;
-	}
+  /** Thoughts getter. */
+  public List<Thought> getThoughts() {
+    return thoughts;
+  }
+
+  /** Thoughts setter. */
+  public void setThoughts(final List<Thought> thoughts) {
+    this.thoughts = thoughts;
+  }
 
 }

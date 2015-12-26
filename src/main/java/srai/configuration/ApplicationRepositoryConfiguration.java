@@ -10,21 +10,26 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 import srai.model.Person;
 import srai.model.validation.PersonValidator;
 
+/** Application repository configuration. */
 @Configuration
 @EnableJpaAuditing
 public class ApplicationRepositoryConfiguration extends RepositoryRestConfigurerAdapter {
 
-	@Autowired
-	private PersonValidator personValidator;
+  /** Person model validator. */
+  @Autowired
+  private transient PersonValidator personValidator;
 
-	@Override
-	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-		config.exposeIdsFor(Person.class);
-		config.setReturnBodyOnCreate(true);
-	}
+  /** Spring rest repository behavior configuration. */
+  @Override
+  public void configureRepositoryRestConfiguration(final RepositoryRestConfiguration config) {
+    config.exposeIdsFor(Person.class);
+    config.setReturnBodyOnCreate(true);
+  }
 
-	@Override
-	public void configureValidatingRepositoryEventListener(ValidatingRepositoryEventListener validatingListener) {
-		validatingListener.addValidator("beforeCreate", personValidator);
-	}
+  /** Validation event configuration. */
+  @Override
+  public void configureValidatingRepositoryEventListener(
+      final ValidatingRepositoryEventListener validatingListener) {
+    validatingListener.addValidator("beforeCreate", personValidator);
+  }
 }
