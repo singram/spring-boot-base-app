@@ -2,6 +2,7 @@ package srai.integration;
 
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
@@ -40,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 @Transactional
 @SuppressWarnings(
     { "PMD.JUnitTestsShouldIncludeAssert", "PMD.CommentRequired" })
-public class PersonApiTests {
+public class PersonApiPostTests {
 
   @Autowired
   private transient WebApplicationContext context;
@@ -52,29 +53,6 @@ public class PersonApiTests {
   public void setUp() {
     RestAssured.port = port;
     RestAssuredMockMvc.webAppContextSetup(context);
-  }
-
-  @SuppressWarnings({"checkstyle:Indentation"})
-  @Test
-  public void getPersonRecordFixtureSuccess() {
-    given()
-    .log().all(true)
-    .when()
-    .get("/people/{person_id}", 1)
-    .then()
-    .log().all(true)
-    .contentType(ContentType.JSON)
-    .statusCode(HttpServletResponse.SC_OK)
-    .body("firstName", equalTo("Stuart"));
-  }
-
-  @Test
-  public void getPersonRecordFixtureMissing() {
-    given()
-    .when()
-    .get("/people/{person_id}", 0)
-    .then()
-    .statusCode(HttpServletResponse.SC_NOT_FOUND);
   }
 
   @Test
@@ -114,6 +92,36 @@ public class PersonApiTests {
     .statusCode(HttpServletResponse.SC_OK)
     .body("firstName", equalTo("bar_Frodo"))
     .body("lastName", equalTo("Baggins"));
+  }
+
+
+  @Test
+  public void createPersonRecordWithThoughtsSuccess() {
+    final MockMvcResponse response =
+        given()
+        .log().all(true)
+        .contentType(ContentType.JSON)
+        .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\", \"thoughts\" : [{\"data\":\"My precious\"},{\"data\":\"One ring to rule them all\"}]}")
+        .when()
+        .post("/people")
+        .then()
+        .log().all(true)
+        .contentType(ContentType.JSON)
+        .statusCode(HttpServletResponse.SC_CREATED)
+        .extract().response();
+
+    final int personId = response.path("id");
+
+    given()
+    .when()
+    .get("/people/{person_id}", personId)
+    .then()
+    .contentType(ContentType.JSON)
+    .statusCode(HttpServletResponse.SC_OK)
+    .body("firstName", equalTo("bar_Frodo"))
+    .body("lastName", equalTo("Baggins"))
+    .body("thoughts.size()", equalTo(2))
+    .body("thoughts.data", hasItems("My precious", "One ring to rule them all"));
   }
 
 }

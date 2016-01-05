@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,7 +21,8 @@ public class Person extends CommonBaseModel {
   private String lastName;
 
   /** Thoughts a person has. */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "person_id")
   private List<Thought> thoughts;
 
   /** First name getter. */

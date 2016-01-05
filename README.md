@@ -100,6 +100,11 @@ curl http://localhost:8080/profile/persons
 ### Post new record
 curl -i -X POST -H "Content-Type:application/json" -d '{  "firstName" : "Frodo",  "lastName" : "Baggins" }' http://localhost:8080/people
 
+curl -i -X POST -H "Content-Type:application/json" -d '{  "person" : "http://localhost:8080/people/3",  "data" : "I had a thought!" }' http://localhost:8080/thoughts
+
+curl -i -X POST -H "Content-Type:application/json" -d '{  "firstName" : "Frodo",  "lastName" : "Baggins", "thoughts" : [{"data":"My precious"},{"data":"One ring to rule them all"}] }' http://localhost:8080/people
+
+
 ## Credits/ Contributions
 
 Bill Koch (https://github.com/billkoch)
@@ -108,6 +113,7 @@ Bill Koch (https://github.com/billkoch)
 
 ## To Investigate
 
+- When persisting an object with a sub-object, 2 inserts are made followed by an update on the sub-object to set the parent id.  This is inefficient and seems like it should be resolved down to 2 inserts in this case.
 - Auto reload
 - Lombock
 - Profiles
