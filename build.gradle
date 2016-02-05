@@ -43,9 +43,8 @@ sourceCompatibility = jdkVersion
 targetCompatibility = jdkVersion
 
 dependencies {
+    compile("org.apache.commons:commons-lang3:3.0")
     compile("org.flywaydb:flyway-core:3.1")
-    compile("com.jayway.restassured:json-path:2.7.0")
-    compile("com.jayway.restassured:xml-path:2.7.0")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.data:spring-data-rest-hal-browser")
     compile('org.springframework.data:spring-data-rest-webmvc:2.4.1.RELEASE')
@@ -54,16 +53,18 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-remote-shell")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-
-    runtime("mysql:mysql-connector-java:5.1.6")
     compile("com.timgroup:java-statsd-client")
 
+    runtime("mysql:mysql-connector-java:5.1.6")
+    
     testCompile('org.flywaydb.flyway-test-extensions:flyway-spring-test:3.2.1') {
         exclude group: 'org.slf4j' //introducing multiple slf4j impl
     }
     testCompile("org.springframework.boot:spring-boot-starter-test",
-                "com.jayway.restassured:rest-assured:2.7.0",
-                'com.jayway.restassured:spring-mock-mvc:2.7.0',
+                "com.jayway.restassured:json-path:2.8.0",
+                "com.jayway.restassured:rest-assured:2.8.0",
+                'com.jayway.restassured:spring-mock-mvc:2.8.0',
+                "com.jayway.restassured:xml-path:2.8.0",
                 "junit:junit")
 }
 
