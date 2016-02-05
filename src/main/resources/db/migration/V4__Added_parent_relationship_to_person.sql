@@ -1,0 +1,3 @@
+ALTER TABLE people
+ADD COLUMN `parent_id` BIGINT UNSIGNED AFTER `id`;
+

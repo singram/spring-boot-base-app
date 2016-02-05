@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +25,16 @@ public class Person extends CommonBaseModel {
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "person_id")
   private List<Thought> thoughts;
+
+  /** Children a person has. */
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "parent_id")
+  private List<Person> children;
+
+  /** Parent of person. */
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "parent_id")
+  private Person parent;
 
   /** First name getter. */
   public String getFirstName() {
@@ -60,6 +71,34 @@ public class Person extends CommonBaseModel {
   /** Thoughts setter. */
   public void setThoughts(final List<Thought> thoughts) {
     this.thoughts = thoughts;
+  }
+
+  /**
+   * @return the children.
+   */
+  public List<Person> getChildren() {
+    return children;
+  }
+
+  /**
+   * @param children the children to set.
+   */
+  public void setChildren(final List<Person> children) {
+    this.children = children;
+  }
+
+  /**
+   * @return the parent.
+   */
+  public Person getParent() {
+    return parent;
+  }
+
+  /**
+   * @param parent the parent to set.
+   */
+  public void setParent(final Person parent) {
+    this.parent = parent;
   }
 
 }
