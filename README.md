@@ -17,7 +17,7 @@ Pre-requisites
     sudo usermod -aG docker YourUserNameHere
     sudo service docker restart
 
-#### Install Docker-compose  (1.4+)
+#### Install Docker-compose  (1.6+)
 
 *MAKE SURE YOU HAVE AN UP TO DATE VERSION OF DOCKER COMPOSE*
 
@@ -25,10 +25,10 @@ To check the version:
  
     docker-compose --version
 
-To install the 1.4.2:
+To install the 1.6.0:
 
     sudo su
-    curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
     exit
 
@@ -59,6 +59,7 @@ Includes the following
 - Full HAL & APLS REST API
   - Validation example
   - Lifecycle hook example
+  - Timestamp auditing
 - Integration testing via RestAssured
 
 ## Refs

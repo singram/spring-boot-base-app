@@ -3,6 +3,7 @@ package srai.integration;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.notNullValue;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
@@ -49,6 +50,12 @@ public class PersonApiPostTests {
   @Value("${local.server.port}")
   private transient int port;
 
+  /** API endpoint under test. */
+  private static final String POST_ENDPOINT = "/people";
+
+  /** API endpoint to retrieve poste d data. */
+  private static final String RETRIEVE_ENDPOINT = "/people/{person_id}";
+
   @Before
   public void setUp() {
     RestAssured.port = port;
@@ -61,10 +68,10 @@ public class PersonApiPostTests {
     .contentType(ContentType.JSON)
     .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"\" }")
     .when()
-    .post("/people")
+    .post(POST_ENDPOINT)
     .then()
     .contentType(ContentType.JSON)
-    .statusCode(HttpServletResponse.SC_BAD_REQUEST);
+      .statusCode(HttpServletResponse.SC_BAD_REQUEST);
   }
 
   @Test
@@ -75,7 +82,7 @@ public class PersonApiPostTests {
         .contentType(ContentType.JSON)
         .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }")
         .when()
-        .post("/people")
+        .post(POST_ENDPOINT)
         .then()
         .log().all(true)
         .contentType(ContentType.JSON)
@@ -86,12 +93,38 @@ public class PersonApiPostTests {
 
     given()
     .when()
-    .get("/people/{person_id}", personId)
+    .get(RETRIEVE_ENDPOINT, personId)
+    .then()
+    .contentType(ContentType.JSON)
+    .statusCode(HttpServletResponse.SC_OK)
+      .body("lastName", equalTo("Baggins"));
+  }
+
+  @Test
+  public void createPersonRecordSucessWithBeforeSaveModifiers() {
+    final MockMvcResponse response =
+        given()
+        .log().all(true)
+        .contentType(ContentType.JSON)
+        .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }")
+        .when()
+        .post(POST_ENDPOINT)
+        .then()
+        .log().all(true)
+        .contentType(ContentType.JSON)
+        .statusCode(HttpServletResponse.SC_CREATED)
+        .extract().response();
+
+    final int personId = response.path("id");
+
+    given()
+    .when()
+    .get(RETRIEVE_ENDPOINT, personId)
     .then()
     .contentType(ContentType.JSON)
     .statusCode(HttpServletResponse.SC_OK)
     .body("firstName", equalTo("bar_Frodo"))
-    .body("lastName", equalTo("Baggins"));
+      .body("createdAt", notNullValue());
   }
 
 
@@ -101,9 +134,10 @@ public class PersonApiPostTests {
         given()
         .log().all(true)
         .contentType(ContentType.JSON)
-        .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\", \"thoughts\" : [{\"data\":\"My precious\"},{\"data\":\"One ring to rule them all\"}]}")
+        .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\", \"thoughts\" :"
+        + " [{\"data\":\"My precious\"},{\"data\":\"One ring to rule them all\"}]}")
         .when()
-        .post("/people")
+        .post(POST_ENDPOINT)
         .then()
         .log().all(true)
         .contentType(ContentType.JSON)
@@ -114,14 +148,13 @@ public class PersonApiPostTests {
 
     given()
     .when()
-    .get("/people/{person_id}", personId)
+    .get(RETRIEVE_ENDPOINT, personId)
     .then()
     .contentType(ContentType.JSON)
     .statusCode(HttpServletResponse.SC_OK)
-    .body("firstName", equalTo("bar_Frodo"))
     .body("lastName", equalTo("Baggins"))
     .body("thoughts.size()", equalTo(2))
-    .body("thoughts.data", hasItems("My precious", "One ring to rule them all"));
+      .body("thoughts.data", hasItems("My precious", "One ring to rule them all"));
   }
 
 }

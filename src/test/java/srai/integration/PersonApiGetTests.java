@@ -64,7 +64,7 @@ public class PersonApiGetTests {
     .log().all(true)
     .contentType(ContentType.JSON)
     .statusCode(HttpServletResponse.SC_OK)
-    .body("firstName", equalTo("Stuart"));
+      .body("firstName", equalTo("Stuart"));
   }
 
   @Test
@@ -73,7 +73,7 @@ public class PersonApiGetTests {
     .when()
     .get("/people/{person_id}", 0)
     .then()
-    .statusCode(HttpServletResponse.SC_NOT_FOUND);
+      .statusCode(HttpServletResponse.SC_NOT_FOUND);
   }
 
 }

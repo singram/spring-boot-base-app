@@ -74,6 +74,7 @@ public class Person extends CommonBaseModel {
   }
 
   /**
+   * Children getter.
    * @return the children.
    */
   public List<Person> getChildren() {
@@ -81,6 +82,7 @@ public class Person extends CommonBaseModel {
   }
 
   /**
+   * Children setter.
    * @param children the children to set.
    */
   public void setChildren(final List<Person> children) {
@@ -88,6 +90,7 @@ public class Person extends CommonBaseModel {
   }
 
   /**
+   * Parent getter.
    * @return the parent.
    */
   public Person getParent() {
@@ -95,6 +98,7 @@ public class Person extends CommonBaseModel {
   }
 
   /**
+   * Parent setter.
    * @param parent the parent to set.
    */
   public void setParent(final Person parent) {
