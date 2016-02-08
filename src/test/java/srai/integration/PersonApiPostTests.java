@@ -5,10 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.notNullValue;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
-import com.jayway.restassured.module.mockmvc.response.MockMvcResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.flywaydb.test.annotation.FlywayTest;
 import org.flywaydb.test.junit.FlywayTestExecutionListener;
@@ -26,9 +23,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import srai.Application;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
+import com.jayway.restassured.module.mockmvc.response.MockMvcResponse;
 
-import javax.servlet.http.HttpServletResponse;
+import srai.Application;
 
 /** Person restful API integration tests. */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -51,10 +51,10 @@ public class PersonApiPostTests {
   private transient int port;
 
   /** API endpoint under test. */
-  private static final String POST_ENDPOINT = "/people";
+  private static final String POST_ENDPOINT = "/person/";
 
   /** API endpoint to retrieve poste d data. */
-  private static final String RETRIEVE_ENDPOINT = "/people/{person_id}";
+  private static final String RETRIEVE_ENDPOINT = "/person/{personId}";
 
   @Before
   public void setUp() {
@@ -65,11 +65,13 @@ public class PersonApiPostTests {
   @Test
   public void createPersonRecordValidationFailure() {
     given()
+    .log().all(true)
     .contentType(ContentType.JSON)
     .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"\" }")
     .when()
     .post(POST_ENDPOINT)
     .then()
+    .log().all(true)
     .contentType(ContentType.JSON)
       .statusCode(HttpServletResponse.SC_BAD_REQUEST);
   }
@@ -157,4 +159,32 @@ public class PersonApiPostTests {
       .body("thoughts.data", hasItems("My precious", "One ring to rule them all"));
   }
 
+  @Test
+  public void createPersonRecordWithChildrenSuccess() {
+    final MockMvcResponse response =
+        given()
+        .log().all(true)
+        .contentType(ContentType.JSON)
+        .body("{ \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\", \"children\" :"
+        + " [ { \"firstName\" : \"Frodo Jr\",  \"lastName\" : \"Baggins\" } ] }")
+        .when()
+        .post(POST_ENDPOINT)
+        .then()
+        .log().all(true)
+        .contentType(ContentType.JSON)
+        .statusCode(HttpServletResponse.SC_CREATED)
+        .extract().response();
+
+    final int parentId = response.path("id");
+
+    given()
+    .when()
+    .get(RETRIEVE_ENDPOINT, parentId)
+    .then()
+    .contentType(ContentType.JSON)
+    .statusCode(HttpServletResponse.SC_OK)
+    .body("lastName", equalTo("Baggins"))
+    .body("children.size()", equalTo(1))
+      .body("children[0].firstName", equalTo("bar_Frodo Jr"));
+  }
 }

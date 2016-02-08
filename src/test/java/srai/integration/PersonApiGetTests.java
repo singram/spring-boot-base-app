@@ -47,6 +47,9 @@ public class PersonApiGetTests {
   @Value("${local.server.port}")
   private transient int port;
 
+  /** API endpoint to retrieve posted data. */
+  private static final String RETRIEVE_ENDPOINT = "/person/{personId}";
+
   @Before
   public void setUp() {
     RestAssured.port = port;
@@ -59,7 +62,7 @@ public class PersonApiGetTests {
     given()
     .log().all(true)
     .when()
-    .get("/people/{person_id}", 1)
+    .get(RETRIEVE_ENDPOINT, 1)
     .then()
     .log().all(true)
     .contentType(ContentType.JSON)
@@ -71,7 +74,7 @@ public class PersonApiGetTests {
   public void getPersonRecordFixtureMissing() {
     given()
     .when()
-    .get("/people/{person_id}", 0)
+    .get(RETRIEVE_ENDPOINT, 0)
     .then()
       .statusCode(HttpServletResponse.SC_NOT_FOUND);
   }

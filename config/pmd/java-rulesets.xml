@@ -14,6 +14,8 @@
     <rule ref="rulesets/java/comments.xml"/>
     <rule ref="rulesets/java/controversial.xml">
         <exclude name="AtLeastOneConstructor"/>
+        <exclude name="OnlyOneReturn"/>
+        <exclude name="DataflowAnomalyAnalysis"/>
     </rule>    
     <rule ref="rulesets/java/coupling.xml">
         <exclude name="LoosePackageCoupling"/>

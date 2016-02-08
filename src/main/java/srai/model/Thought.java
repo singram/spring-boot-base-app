@@ -1,7 +1,10 @@
 package srai.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -12,6 +15,8 @@ public class Thought extends CommonBaseModel {
 
   /** Person thought belongs to. */
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "person_id")
+  @JsonBackReference
   private Person person;
 
   /** Thought data. */

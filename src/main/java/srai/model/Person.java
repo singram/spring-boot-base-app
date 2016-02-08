@@ -1,18 +1,28 @@
 package srai.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import srai.model.eventlistener.PersonEventListener;
+
 /** Person data model. */
 @Entity
 @Table(name = "people")
+@EntityListeners(PersonEventListener.class)
 public class Person extends CommonBaseModel {
 
   /** First name. */
@@ -22,18 +32,19 @@ public class Person extends CommonBaseModel {
   private String lastName;
 
   /** Thoughts a person has. */
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "person_id")
-  private List<Thought> thoughts;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private List<Thought> thoughts = new ArrayList<Thought>();
 
   /** Children a person has. */
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "parent_id")
-  private List<Person> children;
+  @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonManagedReference
+  private Set<Person> children = new HashSet<Person>();
 
   /** Parent of person. */
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "parent_id")
+  @JsonBackReference
   private Person parent;
 
   /** First name getter. */
@@ -77,7 +88,7 @@ public class Person extends CommonBaseModel {
    * Children getter.
    * @return the children.
    */
-  public List<Person> getChildren() {
+  public Set<Person> getChildren() {
     return children;
   }
 
@@ -85,7 +96,7 @@ public class Person extends CommonBaseModel {
    * Children setter.
    * @param children the children to set.
    */
-  public void setChildren(final List<Person> children) {
+  public void setChildren(final Set<Person> children) {
     this.children = children;
   }
 
