@@ -7,10 +7,10 @@ buildscript {
         classpath('se.transmode.gradle:gradle-docker:1.2')
         classpath("org.flywaydb:flyway-gradle-plugin:3.2.1")
         classpath 'gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.7'
-        classpath 'com.netflix.nebula:gradle-contacts-plugin:3.0.1'
-        classpath 'com.netflix.nebula:gradle-dependency-lock-plugin:4.2.0'
+ //       classpath 'com.netflix.nebula:gradle-contacts-plugin:3.0.1'
+//        classpath 'com.netflix.nebula:gradle-dependency-lock-plugin:4.2.0'
         classpath 'com.netflix.nebula:gradle-git-scm-plugin:3.0.1'
-        classpath 'com.netflix.nebula:gradle-info-plugin:3.2.1'
+ //       classpath 'com.netflix.nebula:gradle-info-plugin:3.2.1'
     }
 }
 
@@ -31,9 +31,9 @@ apply plugin: "com.gorylenko.gradle-git-properties" // Must be after java plugin
 apply plugin: 'docker'
 apply plugin: 'eclipse'
 apply plugin: 'org.flywaydb.flyway'
-apply plugin: 'nebula.contacts-base'
-apply plugin: 'nebula.info'
-apply plugin: 'nebula.dependency-lock'
+//apply plugin: 'nebula.contacts-base'
+//apply plugin: 'nebula.info'
+//apply plugin: 'nebula.dependency-lock'
 apply plugin: 'nebula.gradle-git-scm'
 apply plugin: 'spring-boot'
 
@@ -75,17 +75,17 @@ dependencies {
                 "junit:junit")
 }
 
-contacts {
-    'stuart@company.com' {
-        name 'Stuart'
-        github 'singram'
-        role 'owner'
-    }
-    'help@company.com' {
-        name 'Support'
-        role 'notify'
-    }
-}
+//contacts {
+//    'stuart@company.com' {
+//        name 'Stuart'
+//        github 'singram'
+//        role 'owner'
+//    }
+ //   'help@company.com' {
+//        name 'Support'
+//        role 'notify'
+//    }
+//}
 
 test {
     afterTest { desc, result ->
@@ -97,7 +97,7 @@ test {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.10'
+    gradleVersion = '2.14.1'
 }
 
 task buildDocker(type: Docker, dependsOn: build) {

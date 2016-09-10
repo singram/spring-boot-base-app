@@ -2,6 +2,7 @@ package srai.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import srai.model.eventlistener.PersonEventListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,8 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import srai.model.eventlistener.PersonEventListener;
 
 /** Person data model. */
 @Entity

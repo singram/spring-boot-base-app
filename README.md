@@ -38,6 +38,7 @@ Note. Eclipse formatting in Mars appears to be broken (http://stackoverflow.com/
 
 http://www.eclipseonetips.com/2013/10/15/disable-eclipse-formatting-for-certain-sections-of-code-only/
 
+Eclipse formatter and import order can be found under `config/checkstyle`
 
 ## To run
 
@@ -127,7 +128,8 @@ Bill Koch (https://github.com/billkoch)
 
 ## To Investigate
 
-- When persisting an object with a sub-object, 2 inserts are made followed by an update on the sub-object to set the parent id.  This is inefficient and seems like it should be resolved down to 2 inserts in this case.
+- Seperation of unit and integration tests
+- Jenkins
 - Auto reload
 - Lombock
 - Profiles

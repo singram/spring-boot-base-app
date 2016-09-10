@@ -1,8 +1,8 @@
 package srai.model.eventlistener;
 
-import javax.persistence.PrePersist;
-
 import srai.model.Person;
+
+import javax.persistence.PrePersist;
 
 /** Person model persistence lifecycle event handler. */
 public class PersonEventListener {
