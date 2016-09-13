@@ -21,7 +21,7 @@ check.finalizedBy checksCopyIndexHtml
 checkstyle {
        configFile = file("${project.rootDir}/config/checkstyle/google_checks-6.13.xml")
        toolVersion = "6.14.1"
-       ignoreFailures = true 
+       ignoreFailures = true
 }
 
 task checkstyleMainHtml << {
@@ -63,12 +63,21 @@ task pmdTestHtml << {
              style: file("${project.rootDir}/config/pmd/pmd-nicerhtml.xsl"),
              out: new File(pmdTest.reports.xml.destination.parent, 'test.html'))
 }
+
 pmdTest.finalizedBy pmdTestHtml
+
+task pmdIntegrationTestHtml << {
+    ant.xslt(in: pmdIntegrationTest.reports.xml.destination,
+             style: file("${project.rootDir}/config/pmd/pmd-nicerhtml.xsl"),
+             out: new File(pmdTest.reports.xml.destination.parent, 'integrationTest.html'))
+}
+
+pmdIntegrationTest.finalizedBy pmdIntegrationTestHtml
 
 
 findbugs {
    toolVersion = '3.0.1'
-   ignoreFailures = false 
+   ignoreFailures = false
    effort = 'max'
    excludeFilter = file("$projectDir/config/findbugs/excludeFilter.xml")
 }
@@ -96,7 +105,6 @@ jacocoTestReport {
 
 tasks.build.dependsOn(jacocoTestReport, javadoc)
 
-task reports(dependsOn: [ 'check', 'test', 'javadoc', 'jacocoTestReport'] ) << {
+task reports(dependsOn: [ 'check', 'test', 'integrationTest', 'javadoc', 'jacocoTestReport'] ) << {
     println "Reports generated."
 }
-
