@@ -101,6 +101,7 @@ jacocoTestReport {
             destination "${buildDir}/reports/jacoco"
         }
     }
+    executionData(test, integrationTest)
 }
 
 tasks.build.dependsOn(jacocoTestReport, javadoc)
